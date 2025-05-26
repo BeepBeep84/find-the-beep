@@ -1,0 +1,155 @@
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 85%);
+    z-index: -1;
+}
+
+body {
+    opacity: 0.8;
+    position: relative;
+    animation: flicker .3s infinite;
+    font-family: "VT323", "Courier New", monospace;
+    margin: 0;
+    min-height: 100vh;
+	color: #f4f4f4;
+	background-color: rgba(0, 0, 0, 0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center the entire content horizontally */
+	justify-content: flex-start; /* Allow content to expand and scroll */
+	
+}
+
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.6) 8px);
+    opacity: .10;
+    pointer-events: none;
+}
+
+/* Scan Line Effect */
+.scan-line {
+  position: fixed;
+  top: -100px; 
+  left: 0;
+  width: 100%;
+  height: 20px; 
+  background: rgba(255, 255, 255, 0.02); 
+  z-index: 3; 
+  animation: scanline-move 12s linear infinite; 
+  pointer-events: none; 
+}
+
+@keyframes scanline-move {
+  0% {
+    top: -100px; /* Start above the viewport */
+  }
+  100% {
+    top: 100vh; /* Move below the viewport */
+  }
+}
+
+/* Flicker Animation */
+@keyframes flicker {
+    0% { opacity: 0.88; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.87; }
+}
+
+a {
+    color: #F4F4F4;
+    background-color: #5C5C5C;
+    text-decoration: none;
+    padding: 2px 0; /* This creates the highlight/select effect */
+}
+
+a:hover {
+    background-color: #7A7A7A; /* Optional: Add a hover effect */
+}
+
+/* Apply the font and styling to various elements */
+body,
+header,
+nav,
+header a,
+nav a,
+h1, h2, h3, h4, h5, h6,
+a /* Target all links */ {
+    font-family: "VT323", "Courier New", monospace;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+/* Set normal text size for headers */
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1rem; /* Set to normal text size */
+    font-weight: normal; /* Remove bold styling */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+/* Link styling inside headers */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    text-decoration: none;
+}
+
+/* Style for post headers (h1 elements) with the dashed "===" effect */
+h1 {
+    position: relative;
+    font-size: 1.5rem; /* Adjust the font size as needed */
+    font-family: "VT323", "Courier New", monospace; /* Ensure the font matches your theme */
+    margin: 20px 0; /* Adjust margin for spacing */
+    padding: 0 10px;
+}
+
+h1::before,
+h1::after {
+    content: "==============================="; /* Create the "===" lines */
+    font-size: 1.5rem; /* Match the font size to the text */
+    font-family: "VT323", "Courier New", monospace; /* Keep font consistent */
+    display: block;
+    white-space: nowrap; /* Prevent the line from wrapping */
+    margin: 10px 0; /* Adjust margin for spacing */
+}
+
+/* Ensure long titles break properly but keep the "===" centered */
+h1 a {
+    display: inline-block;
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the same color as the title */
+    word-break: break-word; /* Allow long words to break onto new lines */
+}
+
+
+
+/* Centering the grid-container horizontally */
+#grid-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center text content */
+    margin-top: 20px; /* Optional: Add some top margin */
+	width: 100%; /* Ensure the grid container takes full width */
+}
+
+/* Optional: Adjusting the input and anchor tag styles */
+input, a {
+    margin: 10px 0; /* Add some space between inputs and the link */
+    font-family: "VT323", "Courier New", monospace; /* Match your terminal style */
+}
+
+
+.inline-text {
+    white-space: nowrap; /* Prevent the text from breaking into a new line */
+}

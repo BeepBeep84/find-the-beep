@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find The Beep</title>
+	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://randomboo.com/mainstyle.css">
+</head>
+<body>
+    <div id="grid-container">
+        <h1>Find The Beep</h1>
+
+        <label for="rows">Enter number of rows: </label>
+        <input type="number" id="rows" min="4" value="4">
+        <br>
+        <label for="cols">Enter number of columns: </label>
+        <input type="number" id="cols" min="4" value="4">
+        <br>
+		<span class="inline-text">
+			<a href="#" onclick="generateGrid(); return false;">&nbsp;go&nbsp;</a> find the beep
+		</span>
+
+		<br>
+
+        <div id="gridContainer"></div>
+    </div>
+
+    <!-- Scanline Effect -->
+    <div class="scan-line"></div>
+    <script>
+        function getPreviousLetters(grid, i, j, dx, dy) {
+            let seq = '';
+            for (let k = 1; k <= 3; k++) {
+                const x = i - k * dx;
+                const y = j - k * dy;
+                if (x >= 0 && x < grid.length && y >= 0 && y < grid[0].length) {
+                    seq = grid[x][y] + seq;
+                } else {
+                    break;
+                }
+            }
+            return seq;
+        }
+
+        function generateGrid() {
+            const rows = parseInt(document.getElementById('rows').value);
+            const cols = parseInt(document.getElementById('cols').value);
+
+            if (isNaN(rows) || isNaN(cols) || rows < 4 || cols < 4) {
+                alert('Grid size should be at least 4x4.');
+                return;
+            }
+
+            const directions = [
+                [-1, 0],   // up
+                [-1, 1],   // up-right
+                [0, 1],    // right
+                [1, 1],    // down-right
+                [1, 0],    // down
+                [1, -1],   // down-left
+                [0, -1],   // left
+                [-1, -1]   // up-left
+            ];
+
+            const letters = ['B', 'E', 'P'];
+            let grid = Array.from({ length: rows }, () => Array(cols).fill(''));
+
+            let conflict = false;
+
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    let possibleLetters = new Set(letters);
+
+                    for (let [dx, dy] of directions) {
+                        const seq = getPreviousLetters(grid, i, j, dx, dy);
+                        if (seq.length >= 3) {
+                            if (seq.endsWith('BEE')) {
+                                possibleLetters.delete('P');
+                            }
+                            if (seq.endsWith('PEE')) {
+                                possibleLetters.delete('B');
+                            }
+                        }
+                    }
+
+                    if (possibleLetters.size === 0) {
+                        conflict = true;
+                        break;
+                    }
+
+                    const letterArray = Array.from(possibleLetters);
+                    grid[i][j] = letterArray[Math.floor(Math.random() * letterArray.length)];
+                }
+
+                if (conflict) {
+                    break;
+                }
+            }
+
+            if (conflict) {
+                // Retry if conflict is found
+                generateGrid();
+            } else {
+                displayGrid(grid);
+            }
+        }
+
+        function displayGrid(grid) {
+            const gridContainer = document.getElementById('gridContainer');
+            gridContainer.innerHTML = '';
+
+            const table = document.createElement('table');
+            grid.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+
+            gridContainer.appendChild(table);
+        }
+    </script>
+</body>
+</html>
