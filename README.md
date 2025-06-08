@@ -9,7 +9,7 @@ Inspired by *Find the Fox* by Alex Cheddar, this puzzle avoids forming the word 
 
 ## 🔗 Try It Online
 [Live Version](https://randomboo.com/FindTheBeep.html)  
-[Blog Post](http://blog.randomboo.com/find_the_beep/)
+[Blog Post](https://randomboo.com/project/find_the_beep/)
 
 ## 📂 Files Included
 - `FindTheBeep.html` – Interactive webpage
